@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Individual Registration Form</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <form (submit)="register(user)">
+    <ion-list>
+      <ion-item>
+        <ion-label color='primary'>First Name</ion-label>
+        <ion-input type="text" name="firstName" [(ngModel)]="user.firstName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color='primary'>Last Name</ion-label>
+        <ion-input type="text" name="lastName" [(ngModel)]="user.lastName"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color='primary'>Zip Code </ion-label>
+        <ion-input type="text" name="zipCode" [(ngModel)]="user.zipCode"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label color='primary'>{{ 'EMAIL' | translate }}</ion-label>
+        <ion-input type="email" name="email" [(ngModel)]="user.email"></ion-input>
+      </ion-item>
+
+        <ion-item>
+        <ion-label color='primary'>{{ 'PASSWORD' | translate }}</ion-label>
+        <ion-input type="password" name="password" [(ngModel)]="user.password"></ion-input>
+      </ion-item>
+  
+      <div padding>
+        <button ion-button color="primary" block>Sign Up</button>
+      </div>
+
+    </ion-list>
+  </form>
+</ion-content>

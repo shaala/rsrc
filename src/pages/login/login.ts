@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { IonicPage, NavController, ToastController } from 'ionic-angular';
-
-import { User } from '../../providers/providers';
+import { Http, Headers, Response } from '@angular/http';
+import { IonicPage, NavController } from 'ionic-angular';
 import { MainPage } from '../pages';
+
+import "rxjs";
 
 @IonicPage()
 @Component({
@@ -11,40 +11,27 @@ import { MainPage } from '../pages';
   templateUrl: 'login.html'
 })
 export class LoginPage {
-  // The account fields for the login form.
-  // If you're using the username field with or without email, make
-  // sure to add it to the type
-  account: { email: string, password: string } = {
-    email: 'test@example.com',
-    password: 'test'
-  };
+ 
+organization: object= {};
+headers: Headers;
 
-  // Our translated text strings
-  private loginErrorString: string;
+  constructor(public navCtrl: NavController, private http: Http) {
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+   }
+  
 
-  constructor(public navCtrl: NavController,
-    public user: User,
-    public toastCtrl: ToastController,
-    public translateService: TranslateService) {
-
-    this.translateService.get('LOGIN_ERROR').subscribe((value) => {
-      this.loginErrorString = value;
-    })
-  }
-
-  // Attempt to login in through our User service
-  doLogin() {
-    this.user.login(this.account).subscribe((resp) => {
-      this.navCtrl.push(MainPage);
-    }, (err) => {
-      this.navCtrl.push(MainPage);
-      // Unable to log in
-      let toast = this.toastCtrl.create({
-        message: this.loginErrorString,
-        duration: 3000,
-        position: 'top'
-      });
-      toast.present();
+  register(organization: any) {
+    this.http.post("http://localhost:8080/organization/organization/signup", organization, { headers: this.headers }) 
+    .toPromise()
+    .then(response => {
+      if (response.json().message === "organization created!") {
+        this.navCtrl.push(MainPage);
+      } else alert("We are having trouble registering you at this time. Please check your information and try again.")
     });
   }
+
 }
+
+
+

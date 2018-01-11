@@ -1,0 +1,57 @@
+.title {
+    font-size: 36px;
+    text-align: center;
+    font-weight: bold;
+    color: #6b9c75;
+}
+
+.panel-title {
+    font-size: 36px;
+    height: 150px;
+    text-align: center;
+    padding-top: 50px;
+}
+ul {
+padding: 0;
+}
+
+li {
+    list-style: none;
+    text-align: center;
+    font-size: 25px;
+}
+
+
+
+.women {
+    .panel-default {
+        .panel-heading{
+            background-color: rgba(255, 61, 154, .35);
+        }
+    }
+    li {
+         color: rgb(255, 61, 154);
+    }
+}
+
+.children {
+    .panel-default {
+        .panel-heading{
+            background-color: rgba(34, 193, 66, .35);
+        }
+    }
+    li {
+        color: rgb(34, 193, 66);
+    }
+}
+
+.men {
+    .panel-default {
+        .panel-heading{
+            background-color: rgba(35, 55, 96, .35);
+        }
+    }
+    li {
+         color: rgb(35, 55, 96);  
+    }
+}

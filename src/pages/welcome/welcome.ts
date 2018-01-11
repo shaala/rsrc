@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { Http, Headers, Response } from '@angular/http';
+import { IonicPage, NavController, ModalController, NavParams } from 'ionic-angular';
+import { MainPage } from '../pages';
+import { ResourcesPage } from '../resources/resources';
+import { SignupModalPage } from "../signup-modal/signup-modal";
+
+import "rxjs";
 
 /**
  * The Welcome Page is a splash page that quickly describes the app,
@@ -13,14 +19,46 @@ import { IonicPage, NavController } from 'ionic-angular';
   templateUrl: 'welcome.html'
 })
 export class WelcomePage {
+  headers: Headers;
 
-  constructor(public navCtrl: NavController) { }
+  constructor(public navCtrl: NavController, private modal: ModalController, private http: Http) {
+    this.headers = new Headers();
+    this.headers.append('Content-Type', 'application/json');
+  }
 
-  login() {
-    this.navCtrl.push('LoginPage');
+  login(type: string, email: string, password: string) {
+    let url;
+    if(type === "user") {
+      url = 'http://localhost:8080/users/users/login';
+    } else if(type === 'organization') {
+      url = 'http://localhost:8080/organization/organization/login';
+    }
+    this.http
+      .post(url, { email, password }, { headers: this.headers })
+      .toPromise()
+      .then((result: any) => {
+        const res = result.json();
+        if (res.success) {
+          // If result is a good login go to resource page
+          localStorage.setItem('user', JSON.stringify(res));
+          this.navCtrl.push(MainPage);
+        } else {
+          // Login failed alert user
+        }
+      });
   }
 
   signup() {
-    this.navCtrl.push('SignupPage');
+    this.navCtrl.push('LoginPage');
   }
+
+  guest() {
+    this.navCtrl.push(MainPage)
+  }
+
+  openModal() {
+    let signupModal = this.modal.create(SignupModalPage);
+    signupModal.present();
+  }
+
 }

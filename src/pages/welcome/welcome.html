@@ -3,11 +3,36 @@
   <div class="splash-info">
     <div class="splash-logo"></div>
     <div class="splash-intro">
-      {{ 'WELCOME_INTRO' | translate }}
+      {{ 'WELCOME_TITLE' | translate }}
     </div>
   </div>
   <div padding>
-    <button ion-button block (click)="signup()">{{ 'SIGNUP' | translate }}</button>
-    <button ion-button block (click)="login()" class="login">{{ 'LOGIN' | translate }}</button>
+    <form>
+      <ion-list>
+  
+        <ion-item>
+          <ion-label color='primary'>{{ 'EMAIL' | translate }}</ion-label>
+          
+        
+        <ion-input type="email" name="email" 
+          pattern="[A-Za-z0-9._%+-]{3,}@[a-zA-Z]{3,}([.]{1}[a-zA-Z]{2,}|[.]{1}[a-zA-Z]{2,}[.]{1}[a-zA-Z]{2,})"
+          [(ngModel)]="email"></ion-input>
+        </ion-item>
+          <ion-item>
+          <ion-label color='primary'>{{ 'PASSWORD' | translate }}</ion-label>
+          <ion-input type="password" name="password"
+           [(ngModel)]="password"></ion-input>
+        </ion-item>
+  
+        <div padding>
+          <button ion-button color="primary" block (click)="login('user', email, password)">Login as User</button>
+          <button ion-button color="primary" block (click)="login('organization', email, password)">Login as Organization</button>
+        </div>
+
+        <div>
+          <ion-label class="signuptext" color="primary" block> <p (click)="openModal()">New User ? {{ 'SIGNUP_TITLE' | translate }} </p></ion-label>
+        </div>
+      </ion-list>
+    </form>
   </div>
 </ion-content>
